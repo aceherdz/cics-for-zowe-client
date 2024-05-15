@@ -12,7 +12,7 @@
 import { AbstractSession, ImperativeExpect, Logger } from "@zowe/imperative";
 import { CicsCmciRestClient } from "../../rest";
 import { CicsCmciConstants } from "../../constants";
-import { ICMCIApiResponse, IProgramParms, ITransactionParms, IURIMapParms, IWebServiceParms } from "../../doc";
+import { ICMCIApiResponse, IProgramParms, ITransactionParms, IURIMapParms, IWebServiceParms, IFileParms } from "../../doc";
 
 /**
  * Define a new program resource to CICS through CMCI REST API
@@ -312,3 +312,44 @@ export function defineWebservice(session: AbstractSession, parms: IWebServicePar
   return CicsCmciRestClient.postExpectParsedXml(session, cmciResource,
     [], requestBody) as any;
 }
+
+export function defineFile(session: AbstractSession, parms: IFileParms): Promise<ICMCIApiResponse> {
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.name, "File name", "CICS file name is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.csdGroup, "CICS CSD Group", "CICS CSD group is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.regionName, "CICS Region name", "CICS region name is required");
+
+    Logger.getAppLogger().info("Attempting to define a file with the following parameters:\n%s", JSON.stringify(parms));
+    const requestBody: any = {
+      request: {
+        create: {
+          parameter: {
+            $: {
+              name: "CSD",
+            }
+          },
+          attributes: {
+            $: {
+              name: parms.name,
+              csdgroup: parms.csdGroup,
+              dsname: parms.datasetname,
+              add: parms.operationAdd ? "YES":"NO",
+              browse: parms.operationBrowse ? "YES":"NO",
+              delete: parms.operationDelete ? "YES":"NO",
+              read: parms.operationDelete ? "YES":"NO",
+              update: parms.operationUpdate ? "YES":"NO",
+              description: parms.description,
+              keylength: parms.keyLength,
+              recordsize: parms.recordSize,
+              remotename: parms.remoteName,
+              remotesystem: parms.remoteSystem
+            }
+          }
+        }
+      }
+    };
+
+    const cicsPlex = parms.cicsPlex == null ? "" : parms.cicsPlex + "/";
+    const cmciResource = "/" + CicsCmciConstants.CICS_SYSTEM_MANAGEMENT + "/" +
+      CicsCmciConstants.CICS_DEFINITION_FILE + "/" + cicsPlex + parms.regionName;
+    return CicsCmciRestClient.postExpectParsedXml(session, cmciResource, [], requestBody) as any;
+  }

@@ -18,6 +18,7 @@ import { UrimapServerDefinition } from "./urimap-server/UrimapServer.definition"
 import { UrimapClientDefinition } from "./urimap-client/UrimapClient.definition";
 import { UrimapPipelineDefinition } from "./urimap-pipeline/UrimapPipeline.definition";
 import { WebServiceDefinition } from "./webservice/Webservice.definition";
+import { FileDefinition } from "./file/File.definition";
 
 import i18nTypings from "../-strings-/en";
 
@@ -37,7 +38,8 @@ const definition: ICommandDefinition = {
     UrimapServerDefinition,
     UrimapClientDefinition,
     UrimapPipelineDefinition,
-    WebServiceDefinition],
+    WebServiceDefinition,
+    FileDefinition],
   passOn: [
     {
       property: "options",

@@ -12,7 +12,7 @@
 import { AbstractSession, ImperativeExpect, Logger } from "@zowe/imperative";
 import { CicsCmciRestClient } from "../../rest";
 import { CicsCmciConstants } from "../../constants";
-import { ICMCIApiResponse, IProgramParms, IURIMapParms } from "../../doc";
+import { ICMCIApiResponse, IFileParms, IProgramParms, IURIMapParms } from "../../doc";
 
 /**
  * Install a program definition to CICS through CMCI REST API
@@ -117,3 +117,26 @@ export function installUrimap(session: AbstractSession, parms: IURIMapParms): Pr
   };
   return CicsCmciRestClient.putExpectParsedXml(session, cmciResource, [], requestBody);
 }
+
+export function installFile(session: AbstractSession, parms: IFileParms): Promise<ICMCIApiResponse> {
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.name, "CICS Program name", "CICS program name is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.csdGroup, "CICS CSD Group", "CICS CSD group is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.regionName, "CICS Region name", "CICS region name is required");
+
+    Logger.getAppLogger().debug("Attempting to install a file with the following parameters:\n%s", JSON.stringify(parms));
+    const requestBody: any = {
+      request: {
+        action: {
+          $: {
+            name: "CSDINSTALL",
+          }
+        }
+      }
+    };
+
+    const cicsPlex = parms.cicsPlex == null ? "" : parms.cicsPlex + "/";
+    const cmciResource = "/" + CicsCmciConstants.CICS_SYSTEM_MANAGEMENT + "/" +
+          CicsCmciConstants.CICS_DEFINITION_FILE + "/" + cicsPlex + parms.regionName +
+          "?CRITERIA=(NAME=" + parms.name + ")&PARAMETER=CSDGROUP(" + parms.csdGroup + ")";
+    return CicsCmciRestClient.putExpectParsedXml(session, cmciResource, [], requestBody) as any;
+  }

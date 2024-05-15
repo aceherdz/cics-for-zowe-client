@@ -152,7 +152,40 @@ export default {
           EX1: "Define a webservice named WEBSVCA for the pipeline named PIPE123 to the region named MYREGION " +
                         "in the CSD group MYGRP where the binding file is /u/exampleapp/wsbind/example.log"
         }
-      }
+      },
+      FILE: {
+        DESCRIPTION: "Define a new File to cics",
+        POSITIONALS: {
+          FILENAME: "specifies the name of the file. The name can be up to eight characters in length.",
+          CSDGROUP: "The CICS system definition (CSD) Group for the new program that you want to define." +
+                    " The maximum length of the group "
+                    + "name is eight characters."
+
+        },
+        OPTIONS: {
+          REGIONNAME: "The CICS region name to which to define the new program",
+          CICSPLEX: "The name of the CICSPlex to which to define the new program",
+          DATASETNAME: "specifies the data set name (as known to the operating system) to be used for this file.",
+          DESCRIPTION: "You can provide a description of the resource you are defining in this field.",
+          KEYLENGTH:"The length in bytes of the logical key of records in remote files,",
+          RECORDSIZE:"The maximum length in bytes of records in a remote file ",
+          REMOTESYSTEM:"The name you specify must be the name of the CONNECTION resource definition for the link to the remote CICS.4 characters length",
+          REMOTENAME:"Specifies the name by which this file is known in the system or region in which it is resident.",
+          OPERATIONADD:"Specifies that records can be added to the file. true by default",
+          OPERATIONBROWSE:"Specifies that Records may be sequentially retrieved from the file. true by default",
+          OPERATIONDELETE:"Specifies that Records in this file can be deleted. true by default",
+          OPERATIONREAD:"Specifies that Records in this file can be read. READ is assumed, if you specify BROWSE or UPDATE. true by default",
+          OPERATIONUPDATE:"Specifies that Records in this file can be changed. true by default",
+        },
+        MESSAGES: {
+          SUCCESS: "The File '%s' was defined successfully."
+        },
+        EXAMPLES: {
+          EX1: "Define a local file named FIL010 to the region name MYREGION in the CSD group MYGRP with the datasetname TEST.FILE.FIL010.",
+          EX2: "Define a remote file named REM100 to the region name MYREGION in the CSD group MYGRP that points to the remote system OTREGION.",
+          EX3: "Define a local file named RDO110 to the region name MYREGION in the CSD group MYGRP with the datasetname TEST.FILE.FIL010 for read only."
+        }
+      },
     }
   },
   DELETE: {
@@ -416,7 +449,25 @@ export default {
         EXAMPLES: {
           EX1: "Install a urimap named URIMAPA to the region named MYREGION belonging to the csdgroup MYGRP"
         }
-      }
+      },
+      FILE:{
+        DESCRIPTION: "Install a File to CICS.",
+        POSITIONALS: {
+          FILENAME: "The name of the file to install. The maximum length of the program name is eight characters.",
+          CSDGROUP: "The CICS system definition (CSD) Group for the program that you want to install." +
+                        " The maximum length of the group name is eight characters."
+        },
+        OPTIONS: {
+          REGIONNAME: "The CICS region name to which to install the program",
+          CICSPLEX: "The name of the CICSPlex to which to install the program"
+        },
+        MESSAGES: {
+          SUCCESS: "The file named '%s' was installed successfully."
+        },
+        EXAMPLES: {
+          EX1: "Install a file named FIL123 to the region named MYREGION in the CSD group MYGRP"
+        }
+      },
     }
   },
   REFRESH: {
