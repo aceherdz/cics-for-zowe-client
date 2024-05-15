@@ -546,5 +546,26 @@ export default {
         }
       }
     }
-  }
+  },
+  CLOSE: {
+    SUMMARY: "Close resources from CICS",
+    DESCRIPTION: "Closes resources (for example, files) from CICS through IBM CMCI.",
+    RESOURCES: {
+      FILE: {
+        DESCRIPTION: "Close a local file from CICS.",
+        POSITIONALS: {
+          FILENAME: "The name of the file to close. The maximum length of the urimap name is eight characters."
+        },
+        OPTIONS: {
+          REGIONNAME: "The CICS region name in which to close the file"
+        },
+        MESSAGES: {
+          SUCCESS: "The file '%s' was enabled successfully."
+        },
+        EXAMPLES: {
+          EX1: "Close a file named FILELCL from the region named MYREGION"
+        }
+      }
+    }
+  },
 };

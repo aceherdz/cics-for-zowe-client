@@ -86,25 +86,25 @@ export const FileDefinition: ICommandDefinition = {
     {
       name: "operation-browse",
       aliases: ["browse"],
-      description: strings.OPTIONS.OPERATIONADD,
+      description: strings.OPTIONS.OPERATIONBROWSE,
       type: "boolean"
     },
     {
       name: "operation-delete",
       aliases: ["delete"],
-      description: strings.OPTIONS.OPERATIONADD,
+      description: strings.OPTIONS.OPERATIONDELETE,
       type: "boolean"
     },
     {
       name: "operation-read",
       aliases: ["read"],
-      description: strings.OPTIONS.OPERATIONADD,
+      description: strings.OPTIONS.OPERATIONREAD,
       type: "boolean"
     },
     {
       name: "operation-update",
       aliases: ["update"],
-      description: strings.OPTIONS.OPERATIONADD,
+      description: strings.OPTIONS.OPERATIONUPDATE,
       type: "boolean"
     }],
   profile: {optional: ["cics"]},
