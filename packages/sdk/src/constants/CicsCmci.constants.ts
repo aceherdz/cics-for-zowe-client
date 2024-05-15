@@ -53,6 +53,16 @@ export const CicsCmciConstants: { [key: string]: any } = {
      */
   CICS_DEFINITION_FILE: "CICSDefinitionFile",
 
+  /**
+     * Specifies the required part of the REST interface URI to access a Local File
+     */
+  CICS_LOCAL_FILE: "CICSLocalFile",
+
+  /**
+     * Specifies the required part of the REST interface URI to access a Local File
+     */
+  CICS_REMOTE_FILE: "CICSRemoteFile",
+
   /*
      * Specifies the required part of the REST interface URI to access URIMaps
      */

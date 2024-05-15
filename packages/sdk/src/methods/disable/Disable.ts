@@ -12,7 +12,7 @@
 import { AbstractSession, ImperativeExpect, Logger } from "@zowe/imperative";
 import { CicsCmciRestClient } from "../../rest";
 import { CicsCmciConstants } from "../../constants";
-import { ICMCIApiResponse, IURIMapParms } from "../../doc";
+import { ICMCIApiResponse, IFileParms, IURIMapParms } from "../../doc";
 
 /**
  * Disable a URIMap installed in CICS through CMCI REST API
@@ -49,3 +49,32 @@ export async function disableUrimap(session: AbstractSession, parms: IURIMapParm
   };
   return CicsCmciRestClient.putExpectParsedXml(session, cmciResource, [], requestBody);
 }
+
+
+export async function disableFile(session: AbstractSession, parms: IFileParms): Promise<ICMCIApiResponse> {
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.name, "CICS File name", "CICS URIMap name is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.regionName, "CICS Region name", "CICS region name is required");
+
+    Logger.getAppLogger().debug("Attempting to disable a File with the following parameters:\n%s", JSON.stringify(parms));
+
+    const cicsPlex = parms.cicsPlex == null ? "" : parms.cicsPlex + "/";
+    const cmciResource = "/" + CicsCmciConstants.CICS_SYSTEM_MANAGEMENT + "/" +
+          CicsCmciConstants.CICS_LOCAL_FILE + "/" + cicsPlex +
+          `${parms.regionName}?CRITERIA=(FILE=${parms.name})`;
+    const requestBody: any = {
+      request: {
+        action: {
+            $: {
+              name: "DISABLED"
+            },
+            parameter:{
+              $: {
+                name: "BUSY",
+                value:"WAIT"
+              }
+            }
+        },
+      }
+    };
+    return CicsCmciRestClient.putExpectParsedXml(session, cmciResource, [], requestBody);
+  }

@@ -12,7 +12,7 @@
 import { AbstractSession, ImperativeExpect, Logger } from "@zowe/imperative";
 import { CicsCmciRestClient } from "../../rest";
 import { CicsCmciConstants } from "../../constants";
-import { ICMCIApiResponse, IProgramParms, ITransactionParms, IURIMapParms } from "../../doc";
+import { ICMCIApiResponse, IFileParms, IProgramParms, ITransactionParms, IURIMapParms } from "../../doc";
 
 /**
  * Discard a program installed in CICS through CMCI REST API
@@ -72,3 +72,16 @@ export async function discardUrimap(session: AbstractSession, parms: IURIMapParm
         `${parms.regionName}?CRITERIA=(NAME='${parms.name}')`;
   return CicsCmciRestClient.deleteExpectParsedXml(session, cmciResource, []);
 }
+
+export async function discardFile(session: AbstractSession, parms: IFileParms): Promise<ICMCIApiResponse> {
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.name, "CICS File name", "CICS File name is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.regionName, "CICS Region name", "CICS region name is required");
+
+    Logger.getAppLogger().debug("Attempting to discard a File with the following parameters:\n%s", JSON.stringify(parms));
+
+    const cicsPlex = parms.cicsPlex == null ? "" : parms.cicsPlex + "/";
+    const cmciResource = "/" + CicsCmciConstants.CICS_SYSTEM_MANAGEMENT + "/" +
+          (parms.remoteFile ? CicsCmciConstants.CICS_REMOTE_FILE : CicsCmciConstants.CICS_LOCAL_FILE) + "/" + cicsPlex +
+          `${parms.regionName}?CRITERIA=(FILE='${parms.name}')`;
+    return CicsCmciRestClient.deleteExpectParsedXml(session, cmciResource, []);
+  }

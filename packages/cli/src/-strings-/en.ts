@@ -283,6 +283,21 @@ export default {
         EXAMPLES: {
           EX1: "Disable a urimap named URIMAPA from the region named MYREGION"
         }
+      },
+      FILE: {
+        DESCRIPTION: "Disable a Local File from CICS.",
+        POSITIONALS: {
+          FILENAME: "The name of the local file to disable. The maximum length of the urimap name is eight characters."
+        },
+        OPTIONS: {
+          REGIONNAME: "The CICS region name in which to disable the urimap"
+        },
+        MESSAGES: {
+          SUCCESS: "The urimap '%s' was disabled successfully."
+        },
+        EXAMPLES: {
+          EX1: "Disable a FILE named FILELOCL from the region named MYREGION"
+        }
       }
     }
   },
@@ -335,6 +350,23 @@ export default {
         },
         EXAMPLES: {
           EX1: "Discard a urimap named URIMAPA from the region named MYREGION"
+        }
+      },
+      FILE: {
+        DESCRIPTION: "Discard a local or remote file from CICS.",
+        POSITIONALS: {
+          FILENAME: "The name of the file to discard. The maximum length of the urimap name is eight characters.",
+        },
+        OPTIONS: {
+          REGIONNAME: "The CICS region name from which to discard the urimap",
+          REMOTEFILE: "Specifies that the file is defined as Remote, if not specified the file is assumed as local"
+        },
+        MESSAGES: {
+          SUCCESS: "The file '%s' was discarded successfully."
+        },
+        EXAMPLES: {
+          EX1: "Discard a local file named FILELCL from the region named MYREGION",
+          EX2: "Discard a remote file named FILERMT from the region named MYREGION"
         }
       }
     }

@@ -75,6 +75,10 @@ export interface IFileParms {
      * allow to update records from the file.
      */
     operationUpdate?: boolean;
+    /**
+     * on discard indicates that the file is remote
+     */
+    remoteFile?: boolean;
 
 
 
