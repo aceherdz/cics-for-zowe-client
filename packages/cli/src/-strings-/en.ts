@@ -262,6 +262,24 @@ export default {
         EXAMPLES: {
           EX1: "Delete a web service named WEBSVCA from the region named MYREGION belonging to the csdgroup MYGRP"
         }
+      },
+      FILE: {
+        DESCRIPTION: "Delete a file definition from CICS.",
+        POSITIONALS: {
+          FILENAME: "The name of the file to delete. The maximum length of the program name is eight characters.",
+          CSDGROUP: "The CICS system definition (CSD) Group for the program that you want to delete." +
+                        " The maximum length of the group name is eight characters."
+        },
+        OPTIONS: {
+          REGIONNAME: "The CICS region name from which to delete the program",
+          CICSPLEX: "The name of the CICSPlex from which to delete the program"
+        },
+        MESSAGES: {
+          SUCCESS: "The program '%s' was deleted successfully."
+        },
+        EXAMPLES: {
+          EX1: "Delete a file definition named FILE123 from the region named MYREGION"
+        }
       }
     }
   },
@@ -293,7 +311,7 @@ export default {
           REGIONNAME: "The CICS region name in which to disable the urimap"
         },
         MESSAGES: {
-          SUCCESS: "The urimap '%s' was disabled successfully."
+          SUCCESS: "The file '%s' was disabled successfully."
         },
         EXAMPLES: {
           EX1: "Disable a FILE named FILELOCL from the region named MYREGION"
@@ -560,7 +578,7 @@ export default {
           REGIONNAME: "The CICS region name in which to close the file"
         },
         MESSAGES: {
-          SUCCESS: "The file '%s' was enabled successfully."
+          SUCCESS: "The file '%s' was closed successfully."
         },
         EXAMPLES: {
           EX1: "Close a file named FILELCL from the region named MYREGION"

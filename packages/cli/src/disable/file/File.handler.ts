@@ -16,7 +16,7 @@ import { CicsBaseHandler } from "../../CicsBaseHandler";
 import i18nTypings from "../../-strings-/en";
 
 // Does not use the import in anticipation of some internationalization work to be done later.
-const strings = (require("../../-strings-/en").default as typeof i18nTypings).DISABLE.RESOURCES.URIMAP;
+const strings = (require("../../-strings-/en").default as typeof i18nTypings).DISABLE.RESOURCES.FILE;
 
 /**
  * Command handler for disabling CICS URIMaps via CMCI
@@ -40,7 +40,7 @@ export default class FileHandler extends CicsBaseHandler {
       regionName: params.arguments.regionName || profile.regionName,
     });
 
-    params.response.console.log(strings.MESSAGES.SUCCESS, params.arguments.urimapName);
+    params.response.console.log(strings.MESSAGES.SUCCESS, params.arguments.fileName);
     return response;
   }
 }

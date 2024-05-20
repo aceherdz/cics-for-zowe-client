@@ -16,7 +16,7 @@ import { CicsBaseHandler } from "../../CicsBaseHandler";
 import i18nTypings from "../../-strings-/en";
 
 // Does not use the import in anticipation of some internationalization work to be done later.
-const strings = (require("../../-strings-/en").default as typeof i18nTypings).DISCARD.RESOURCES.PROGRAM;
+const strings = (require("../../-strings-/en").default as typeof i18nTypings).DISCARD.RESOURCES.FILE;
 
 /**
  * Command handler for discarding CICS programs via CMCI
@@ -41,7 +41,7 @@ export default class FileHandler extends CicsBaseHandler {
       cicsPlex: params.arguments.cicsPlex || profile.cicsPlex
     });
 
-    params.response.console.log(strings.MESSAGES.SUCCESS, params.arguments.programName);
+    params.response.console.log(strings.MESSAGES.SUCCESS, params.arguments.fileName);
     return response;
   }
 }

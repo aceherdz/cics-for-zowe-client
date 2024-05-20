@@ -65,7 +65,7 @@ export async function disableFile(session: AbstractSession, parms: IFileParms): 
       request: {
         action: {
             $: {
-              name: "DISABLED"
+              name: "DISABLE"
             },
             parameter:{
               $: {

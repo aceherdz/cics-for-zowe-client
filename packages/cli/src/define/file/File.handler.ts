@@ -52,7 +52,7 @@ export default class FileHandler extends CicsBaseHandler {
       operationUpdate:params.arguments.operationUpdate ?? true,
     });
 
-    params.response.console.log(strings.MESSAGES.SUCCESS, params.arguments.programName);
+    params.response.console.log(strings.MESSAGES.SUCCESS, params.arguments.fileName);
     return response;
   }
 }

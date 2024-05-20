@@ -12,7 +12,7 @@
 import { AbstractSession, ImperativeExpect, Logger } from "@zowe/imperative";
 import { CicsCmciRestClient } from "../../rest";
 import { CicsCmciConstants } from "../../constants";
-import { ICMCIApiResponse, IProgramParms, ITransactionParms, IURIMapParms, IWebServiceParms } from "../../doc";
+import { ICMCIApiResponse, IFileParms, IProgramParms, ITransactionParms, IURIMapParms, IWebServiceParms } from "../../doc";
 
 /**
  * Delete a program installed in CICS through CMCI REST API
@@ -111,3 +111,17 @@ export async function deleteWebservice(session: AbstractSession, parms: IWebServ
         `${parms.regionName}?CRITERIA=(NAME=${parms.name})&PARAMETER=CSDGROUP(${parms.csdGroup})`;
   return CicsCmciRestClient.deleteExpectParsedXml(session, cmciResource, []);
 }
+
+export async function deleteFile(session: AbstractSession, parms: IFileParms): Promise<ICMCIApiResponse> {
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.name, "CICS File name", "CICS File name is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.csdGroup, "CICS CSD Group", "CICS CSD group is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.regionName, "CICS Region name", "CICS region name is required");
+
+    Logger.getAppLogger().debug("Attempting to delete a file definition with the following parameters:\n%s", JSON.stringify(parms));
+
+    const cicsPlex = parms.cicsPlex == null ? "" : parms.cicsPlex + "/";
+    const cmciResource = "/" + CicsCmciConstants.CICS_SYSTEM_MANAGEMENT + "/" +
+          CicsCmciConstants.CICS_DEFINITION_FILE + "/" + cicsPlex +
+          `${parms.regionName}?CRITERIA=(NAME=${parms.name})&PARAMETER=CSDGROUP(${parms.csdGroup})`;
+    return CicsCmciRestClient.deleteExpectParsedXml(session, cmciResource, []);
+  }
