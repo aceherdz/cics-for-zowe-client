@@ -539,6 +539,22 @@ export default {
         EXAMPLES: {
           DEFINE_EXAMPLE_ONE: "Refresh a program named PGM123 from the region named MYREGION"
         }
+      },
+      PIPELINE: {
+        DESCRIPTION: "Refresh a pipeline definition (pipeline scan)",
+        POSITIONALS: {
+          PIPELINENAME: "The name of the pipeline to refresh. The maximum length of the pipeline name is eight characters."
+        },
+        OPTIONS: {
+          REGIONNAME: "The CICS region name on which you want to refresh the program",
+          CICSPLEX: "The name of the CICSPlex on which to refresh the program"
+        },
+        MESSAGES: {
+          SUCCESS: "The pipeline '%s' was scanned successfully."
+        },
+        EXAMPLES: {
+          DEFINE_EXAMPLE_ONE: "Refresh a pipeline named PIPELN01 from the region named MYREGION"
+        }
       }
     }
   },

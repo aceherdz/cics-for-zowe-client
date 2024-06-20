@@ -14,6 +14,7 @@ import { ProgramDefinition } from "./program/Program.definition";
 
 import i18nTypings from "../-strings-/en";
 import { CicsSession } from "../CicsSession";
+import { PipelineDefinition } from "./pipeline/Pipeline.definition";
 
 // Does not use the import in anticipation of some internationalization work to be done later.
 const strings = (require("../-strings-/en").default as typeof i18nTypings).REFRESH;
@@ -26,7 +27,7 @@ const definition: ICommandDefinition = {
   summary: strings.SUMMARY,
   description: strings.DESCRIPTION,
   type: "group",
-  children: [ProgramDefinition],
+  children: [ProgramDefinition,PipelineDefinition],
   passOn: [
     {
       property: "options",

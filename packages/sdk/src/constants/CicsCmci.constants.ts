@@ -63,6 +63,11 @@ export const CicsCmciConstants: { [key: string]: any } = {
      */
   CICS_REMOTE_FILE: "CICSRemoteFile",
 
+  /**
+     * Specifies the required part of the REST interface URI to access pipeline resource
+     */
+  CICS_PIPELINE_RESOURCE:"CICSPipeline",
+
   /*
      * Specifies the required part of the REST interface URI to access URIMaps
      */

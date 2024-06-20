@@ -13,6 +13,7 @@ import { AbstractSession, ImperativeExpect, Logger } from "@zowe/imperative";
 import { CicsCmciRestClient } from "../../rest";
 import { CicsCmciConstants } from "../../constants";
 import { ICMCIApiResponse, IProgramParms } from "../../doc";
+import { IPipelineParms } from "../../doc/IPipelineParms";
 
 /**
  * Refresh a program definition on CICS through CMCI REST API
@@ -45,3 +46,36 @@ export function programNewcopy(session: AbstractSession, parms: IProgramParms): 
         "?CRITERIA=(PROGRAM=" + parms.name + ")";
   return CicsCmciRestClient.putExpectParsedXml(session, cmciResource, [], requestBody) as any;
 }
+
+
+/**
+ * Refresh a pipeline definition on CICS through CMCI REST API
+ * @param {AbstractSession} session - the session to connect to CMCI with
+ * @param {IProgramParms} parms - parameters for refreshing your program
+ * @returns {Promise<any>} promise that resolves to the response (XML parsed into a javascript object)
+ *                          when the request is complete
+ * @throws {ImperativeError} CICS program name not defined or blank
+ * @throws {ImperativeError} CICS region name not defined or blank
+ * @throws {ImperativeError} CicsCmciRestClient request fails
+ */
+export function pipelineScan(session: AbstractSession, parms: IPipelineParms): Promise<ICMCIApiResponse> {
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.name, "CICS Pipeline name", "CICS Pipeline name is required");
+    ImperativeExpect.toBeDefinedAndNonBlank(parms.regionName, "CICS Region name", "CICS region name is required");
+
+    Logger.getAppLogger().debug("Attempting to scan a pipeline with the following parameters:\n%s", JSON.stringify(parms));
+    const requestBody: any = {
+      request: {
+        action: {
+          $: {
+            name: "SCAN",
+          }
+        }
+      }
+    };
+
+    const cicsPlex = parms.cicsPlex == null ? "" : parms.cicsPlex + "/";
+    const cmciResource = "/" + CicsCmciConstants.CICS_SYSTEM_MANAGEMENT + "/" +
+          CicsCmciConstants.CICS_PIPELINE_RESOURCE + "/" + cicsPlex + parms.regionName +
+          "?CRITERIA=(NAME=" + parms.name + ")";
+    return CicsCmciRestClient.putExpectParsedXml(session, cmciResource, [], requestBody) as any;
+  }
