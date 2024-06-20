@@ -2,6 +2,15 @@
 
 All notable changes to the IBM® CICS® Plug-in for Zowe CLI will be documented in this file.
 
+## Recent Changes
+
+- Add option to define a file on CICS
+- Add option to install a defined file on CICS
+- Add option to delete a file on CICS
+- Add option to discard a defined file on CICS
+- Add option to close, disable and delete a file defined on CICS
+- Add option to perform a refresh a pipeline on CICS
+
 ## `5.0.3`
 
 - BugFix: Updated dependencies for technical currency
